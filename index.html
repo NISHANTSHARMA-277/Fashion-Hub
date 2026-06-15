@@ -296,7 +296,7 @@
         } showSlides();
 
         function loadProducts() { 
-            fetch('http://127.0.0.1:3000/api/products')
+            fetch('/api/products')
                 .then(res => res.json())
                 .then(p => { 
                     allProducts = p; 
@@ -329,8 +329,8 @@
             let price = document.getElementById('addPrice').value; 
             let image = document.getElementById('addImage').value;
             if(!name || !price || !image) return alert("Please fill all details!");
-            
-            fetch('http://127.0.0.1:3000/api/products', { 
+           
+            fetch('/api/products', { 
                 method: 'POST', 
                 headers: { 'Content-Type': 'application/json' }, 
                 body: JSON.stringify({ name: name, price: parseInt(price), image: image }) 
@@ -358,7 +358,7 @@
         
         function deleteProduct(productId) {
             if(confirm("Remove this product from the store?")) { 
-                fetch('http://127.0.0.1:3000/api/products/' + productId, { method: 'DELETE' })
+                fetch('/api/products/' + productId, { method: 'DELETE' })
                 .then(res => res.json())
                 .then(data => { loadProducts(); }); 
             }
@@ -479,7 +479,7 @@
                 customer: currentUser
             };
 
-            fetch('http://127.0.0.1:3000/api/orders', {
+            fetch('/api/orders', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
             }).then(res => res.json()).then(data => {
@@ -491,7 +491,7 @@
         function openAdmin() { document.getElementById('adminModal').style.display = 'flex'; fetchOrders(); }
         
         function fetchOrders() {
-            fetch('http://127.0.0.1:3000/api/orders').then(res => res.json()).then(orders => {
+            fetch('/api/orders').then(res => res.json()).then(orders => {
                 let container = document.getElementById('admin-orders-list'); container.innerHTML = '';
                 if(orders.length === 0) { container.innerHTML = '<p style="color:#666; text-align:center; padding: 20px;">No orders received yet.</p>'; return; }
                 orders.reverse().forEach(o => {
