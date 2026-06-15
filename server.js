@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -55,7 +56,9 @@ app.post('/api/orders', (req, res) => {
 });
 
 app.get('/api/orders', (req, res) => { res.json(ordersDB); });
-
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 app.listen(port, () => {
     console.log(`\n======================================================`);
     console.log(`🚀 Backend Server ekdum mast chalu hai!`);
