@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionHub - Elite UI Edition</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f8f9fa; transition: 0.3s; color: #333; }
+        
+        /* Dark Mode */
+        body.dark-mode { background-color: #121212; color: #ffffff; }
+        .dark-mode .product-card { background-color: #1e1e1e; border: 1px solid #333; box-shadow: none; }
+        .dark-mode .modal-content { background-color: #1e1e1e; color: #fff; border: 1px solid #333;}
+        .dark-mode input, .dark-mode textarea { background-color: #2a2a2a; color: white; border: 1px solid #555; }
+        .dark-mode .admin-item, .dark-mode .cart-item, .dark-mode .payment-option { border-color: #333; }
+        .dark-mode .filter-bar { background: #1e1e1e; border-bottom: 1px solid #333; box-shadow: none;}
+        .dark-mode .filter-btn { background-color: #2a2a2a; color: #ccc; border-color: #444; }
+        .dark-mode .filter-btn.active { background-color: #febd69; color: #111; border-color: #febd69;}
+        
+        /* SLEEK NAVBAR */
+        nav { background-color: #111; color: white; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 20px; }
+        .logo-container { display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+        .premium-bag-icon { position: relative; width: 30px; height: 30px; background: #febd69; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .premium-bag-icon::before { content: ''; position: absolute; top: -6px; width: 14px; height: 8px; border: 2px solid #febd69; border-bottom: none; border-radius: 50% 50% 0 0; }
+        .premium-bag-icon::after { content: 'F'; color: #111; font-family: 'Arial Black', sans-serif; font-size: 16px; font-weight: bold; }
+        .logo { font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: 1.5px; text-transform: uppercase;}
+        .logo span { color: #febd69; font-weight: 300;}
+        
+        /* SLEEK SEARCH BOX */
+        .search-box input { width: 350px; padding: 10px 15px; font-size: 15px; border-radius: 4px; border: 1px solid #444; background: #222; color: #fff; outline: none; transition: 0.3s; }
+        .search-box input:focus { background: #fff; color: #111; border-color: #febd69; }
+
+        /* SLEEK NAV BUTTONS */
+        .nav-links { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .nav-links span { cursor: pointer; font-weight: 600; color: #fff; padding: 8px 15px; border-radius: 4px; transition: 0.2s; font-size: 14px; border: 1px solid transparent;}
+        .nav-links span:hover { border-color: #febd69; color: #febd69; }
+        .nav-links .cart-btn { background: #febd69; color: #111; border: none; }
+        .nav-links .cart-btn:hover { background: #f3a847; color: #111; }
+        .btn-admin { background: #dc3545 !important; color: white !important; border: none !important; }
+        .btn-admin:hover { background: #c82333 !important; }
+
+        /* SLEEK CATEGORY FILTER BAR */
+        .filter-bar { display: flex; justify-content: center; gap: 15px; padding: 15px 20px; background: #fff; border-bottom: 1px solid #eaeaea; margin-bottom: 25px; flex-wrap: wrap; }
+        .filter-btn { padding: 8px 25px; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; font-weight: 600; background: transparent; transition: 0.2s; font-size: 14px; color: #555; text-transform: uppercase; letter-spacing: 1px;}
+        .filter-btn:hover { border-color: #111; color: #111; }
+        .filter-btn.active { background: #111; color: white; border-color: #111; }
+
+        /* SLIDER */
+        .slider-container { width: 100%; height: 450px; position: relative; overflow: hidden; background-color: #000; margin-bottom: 30px;}
+        .mySlides { display: none; width: 100%; height: 100%; position: absolute; }
+        .mySlides img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .slide-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 50px; font-weight: 800; text-align: center; width: 100%; letter-spacing: 2px; text-transform: uppercase;}
+        .slide-subtext { font-size: 20px; margin-top: 15px; font-weight: 400; letter-spacing: 1px; text-transform: none;}
+        .fade { animation-name: fade; animation-duration: 1.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        /* PRODUCT CARDS - MYNTRA STYLE */
+        .container { max-width: 1300px; margin: 0 auto 50px auto; padding: 0 20px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px;}
+        .product-card { position: relative; background-color: white; padding: 15px; text-align: left; transition: 0.3s; border: 1px solid #eee; border-radius: 6px;}
+        .product-card:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.08); transform: translateY(-3px);}
+        
+        .heart-icon { position: absolute; top: 25px; right: 25px; font-size: 20px; cursor: pointer; background: rgba(255,255,255,0.9); border-radius: 50%; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; z-index: 10; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee;}
+        .heart-icon:hover { transform: scale(1.1); color: red;}
+        
+        .product-image { width: 100%; height: 300px; object-fit: cover; margin-bottom: 15px; cursor: pointer; transition: 0.3s; border-radius: 4px;}
+        .product-image:hover { opacity: 0.9; }
+        .product-title { cursor: pointer; color: #222; font-size: 16px; margin-bottom: 5px; font-weight: 600;}
+        .product-title:hover { color: #febd69; }
+        .product-rating { font-size: 13px; color: #ff9900; margin-bottom: 8px;}
+        .product-price { font-size: 18px; font-weight: 800; color: #111; margin: 10px 0 15px 0; }
+        
+        /* SLEEK CART BUTTON */
+        .btn-cart { background-color: #111; color: white; border: 1px solid #111; padding: 12px; font-size: 14px; font-weight: 600; cursor: pointer; width: 100%; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px;}
+        .btn-cart:hover { background-color: white; color: #111; }
+
+        /* MODALS */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-content { background-color: white; padding: 40px; width: 90%; max-width: 500px; max-height: 85vh; overflow-y: auto; position: relative; border-radius: 8px; }
+        .close-btn { cursor: pointer; color: #999; font-size: 30px; position: absolute; right: 20px; top: 15px; transition: 0.2s; line-height: 1;}
+        .close-btn:hover { color: #111; }
+        
+        /* FORMS & INPUTS */
+        .input-box { width: 100%; padding: 14px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 15px; transition: 0.3s; outline: none;}
+        .input-box:focus { border-color: #111; }
+        .btn-primary { background-color: #111; color: white; border: none; padding: 15px; width: 100%; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; text-transform: uppercase; letter-spacing: 1px; border-radius: 4px;}
+        .btn-primary:hover { background-color: #444; }
+
+        /* CART & PAYMENT */
+        .promo-box { display: flex; gap: 10px; margin-top: 20px; }
+        .promo-box input { flex: 1; padding: 12px; border: 1px solid #ddd; outline: none; border-radius: 4px;}
+        .btn-apply { background: #444; color: white; border: none; padding: 10px 20px; cursor: pointer; font-weight: 600; border-radius: 4px;}
+        .btn-apply:hover { background: #111; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; font-size: 16px; font-weight: 500;}
+        .total-price { font-size: 22px; font-weight: 800; text-align: right; margin-top: 20px; color: #111; }
+        .discount-text { color: #28a745; font-size: 14px; text-align: right; font-weight: bold; display: none; margin-top: 5px; background: #e6f4ea; padding: 5px 10px; display: inline-block; float: right; margin-bottom: 10px; border-radius: 4px;}
+        
+        .payment-option { display: block; margin: 15px 0; font-size: 16px; font-weight: 500; cursor: pointer; padding: 15px; border: 1px solid #ddd; border-radius: 4px; transition: 0.2s;}
+        .payment-option:hover { border-color: #111; background: #fafafa; }
+        .payment-input-container { display: none; margin-top: 15px; padding-left: 5px; }
+
+        /* ADMIN SETTINGS */
+        .admin-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border: 1px solid #eee; background: #fafafa; margin-bottom: 8px; border-radius: 4px;}
+        .btn-delete { background: white; color: #dc3545; border: 1px solid #dc3545; padding: 6px 12px; cursor: pointer; font-weight: 600; border-radius: 4px; transition: 0.2s;}
+        .btn-delete:hover { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-container" ondblclick="revealAdmin()" title="Double click for admin magic!">
+            <div class="premium-bag-icon"></div>
+            <div class="logo">Fashion<span>Hub</span></div>
+        </div>
+        
+        <div class="search-box"><input type="text" id="searchInput" placeholder="Search for products, brands and more..." onkeyup="searchProducts()"></div>
+        
+        <div class="nav-links">
+            <span id="adminBtn" class="btn-admin" onclick="openAdmin()" style="display: none;">👑 Admin</span>
+            <span onclick="toggleTheme()">🌓 Theme</span>
+            <span id="loginBtn" onclick="openLogin()">👤 Login</span>
+            <span onclick="alert('Favorites saved: ' + wishlist.length)">❤️ Saved (<b id="wish-count">0</b>)</span>
+            <span class="cart-btn" onclick="openCart()">🛒 Cart (<b id="cart-count">0</b>)</span>
+        </div>
+    </nav>
+
+    <div class="filter-bar" id="category-filters">
+        <button class="filter-btn active" onclick="filterCategory('All', this)">All</button>
+        <button class="filter-btn" onclick="filterCategory('Men', this)">Men</button>
+        <button class="filter-btn" onclick="filterCategory('Women', this)">Women</button>
+        <button class="filter-btn" onclick="filterCategory('Accessories', this)">Accessories</button>
+    </div>
+
+    <div class="slider-container">
+        <div class="mySlides fade" style="display: block;">
+            <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&q=80">
+            <div class="slide-text">The Summer Edit<div class="slide-subtext">Use Code 'NEW50' for 50% Off!</div></div>
+        </div>
+        <div class="mySlides fade">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=80">
+            <div class="slide-text">New Arrivals<div class="slide-subtext">Elevate your everyday style</div></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 style="margin-bottom: 20px; font-weight: 800; text-transform: uppercase; font-size: 22px;">Trending Now</h2>
+        <div class="product-grid" id="product-grid">
+            <div style="grid-column: 1/-1; text-align:center;">⏳ Connecting to backend...</div>
+        </div>
+    </div>
+
+    <div id="productViewModal" class="modal">
+        <div class="modal-content" style="max-width: 450px; text-align: left;">
+            <span class="close-btn" onclick="closeModal('productViewModal')">×</span>
+            <img id="view-image" src="" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 4px; margin-top: 10px; margin-bottom: 20px;">
+            <h2 id="view-title" style="margin-bottom: 5px; font-weight: 700;"></h2>
+            <p id="view-rating" class="product-rating"></p>
+            <h3 id="view-price" style="color: #111; font-size: 28px; margin-bottom: 20px; font-weight: 800;"></h3>
+            <button class="btn-cart" id="view-cart-btn" style="padding: 15px; font-size: 16px;">Add to Bag</button>
+        </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-btn" onclick="closeModal('loginModal')">×</span>
+            <h2 style="margin-bottom: 10px; font-weight: 800;">Login / Signup</h2>
+            <p style="margin-bottom: 25px; color: #777;">Track your orders and access saved items</p>
+            
+            <div id="step-mobile">
+                <input type="number" id="mobileNo" class="input-box" placeholder="Enter Mobile Number">
+                <button class="btn-primary" onclick="sendOTP()">Continue</button>
+            </div>
+            
+            <div id="step-otp" style="display: none;">
+                <p style="color: #28a745; font-weight: bold; margin-bottom: 15px; background: #e6f4ea; padding: 10px; border-radius: 4px;" id="otp-hint-msg"></p>
+                <input type="number" id="otpBox" class="input-box" placeholder="Enter 4-Digit OTP">
+                <button class="btn-primary" onclick="verifyOTP()">Verify</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('cartModal')">×</span>
+            <h2 style="margin-bottom: 10px; font-weight: 800;">Your Bag</h2><hr style="margin: 15px 0; border: none; border-top: 1px solid #eee;">
+            <div id="cart-items-container" style="max-height: 250px; overflow-y: auto;"></div>
+            
+            <div class="promo-box">
+                <input type="text" id="promoCode" placeholder="Enter Coupon Code">
+                <button class="btn-apply" onclick="applyPromo()">Apply</button>
+            </div>
+            <div style="overflow: hidden; margin-top: 10px;">
+                <div class="discount-text" id="discount-msg" style="display:none;">Promo Applied: 50% OFF! 🎉</div>
+            </div>
+            <div class="total-price" id="total-price">Total: ₹0</div>
+            
+            <button class="btn-primary" style="margin-top:20px;" onclick="proceedToAddress()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('addressModal')">×</span>
+            <h2 style="margin-bottom: 15px; font-weight: 800;">Delivery Details</h2>
+            <input type="text" id="fullName" class="input-box" placeholder="Full Name">
+            <input type="number" id="pinCode" class="input-box" placeholder="Pincode">
+            <textarea id="fullAddress" class="input-box" rows="3" placeholder="Flat No, Building, Street Name, City"></textarea>
+            <button class="btn-primary" onclick="proceedToPayment()">Save & Continue</button>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('paymentModal')">×</span>
+            <h2 style="margin-bottom: 15px; font-weight: 800;">Payment</h2>
+            <div style="margin-bottom: 25px; font-size: 18px; text-align: center; background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #ddd;">
+                Amount Payable: <b style="color: #111;" id="final-amount">₹0</b>
+            </div>
+            
+            <form id="paymentForm">
+                <label class="payment-option">
+                    <input type="radio" name="pay" value="UPI" checked onchange="togglePaymentFields()"> <span style="margin-left: 5px;">UPI (GPay / PhonePe)</span>
+                    <div id="upi-field" class="payment-input-container" style="display: block;">
+                        <input type="text" id="upiId" class="input-box" style="margin-top: 10px;" placeholder="Enter UPI ID (e.g. number@upi)">
+                    </div>
+                </label>
+                
+                <label class="payment-option">
+                    <input type="radio" name="pay" value="Card" onchange="togglePaymentFields()"> <span style="margin-left: 5px;">Credit / Debit Card</span>
+                    <div id="card-field" class="payment-input-container">
+                        <input type="number" id="cardNo" class="input-box" style="margin-top: 10px;" placeholder="Card Number">
+                        <div style="display: flex; gap: 15px;">
+                            <input type="text" class="input-box" placeholder="MM/YY">
+                            <input type="password" class="input-box" placeholder="CVV">
+                        </div>
+                    </div>
+                </label>
+                
+                <label class="payment-option">
+                    <input type="radio" name="pay" value="COD" onchange="togglePaymentFields()"> <span style="margin-left: 5px;">Cash on Delivery (COD)</span>
+                </label>
+            </form>
+            
+            <button class="btn-primary" onclick="confirmFinalOrder()">Pay Now</button>
+        </div>
+    </div>
+
+    <div id="adminModal" class="modal">
+        <div class="modal-content" style="max-width: 650px;">
+            <span class="close-btn" onclick="closeModal('adminModal')">×</span>
+            <h2 style="margin-bottom: 20px; font-weight: 800;">Admin Dashboard</h2>
+            
+            <h3 style="margin-bottom: 10px; font-size: 16px;">Add New Product</h3>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="addName" class="input-box" placeholder="Product Name">
+                <input type="number" id="addPrice" class="input-box" placeholder="Price (₹)">
+            </div>
+            <input type="text" id="addImage" class="input-box" placeholder="Image URL">
+            <button class="btn-primary" style="margin-bottom: 30px;" onclick="addNewProduct()">Upload to Store</button>
+            
+            <h3 style="margin-bottom: 10px; font-size: 16px;">Manage Inventory</h3>
+            <div id="admin-product-list" style="margin-bottom: 30px; max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 4px;"></div>
+
+            <h3 style="margin-bottom: 10px; font-size: 16px;">Customer Orders</h3>
+            <div id="admin-orders-list" style="max-height: 300px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <script>
+        let allProducts = [], cart = [], wishlist = [], total = 0, discountApplied = false;
+        let currentUser = { loggedIn: false, mobile: "", name: "", address: "" };
+        let currentGeneratedOTP = "";
+
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function toggleTheme() { document.body.classList.toggle("dark-mode"); }
+
+        // ADMIN REVEAL WITH DISPLAY BLOCK FIX
+        function revealAdmin() {
+            let pass = prompt("Secret Access: Enter Admin Password:");
+            if (pass === "1234") { 
+                document.getElementById('adminBtn').style.display = 'block'; 
+                alert("Access Granted: Admin button is now visible in the navigation bar.");
+            } else if (pass !== null && pass !== "") {
+                alert("Access Denied: Incorrect Password.");
+            }
+        }
+
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            if(slides.length === 0) return;
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            slideIndex++; if (slideIndex > slides.length) {slideIndex = 1} 
+            slides[slideIndex-1].style.display = "block"; setTimeout(showSlides, 3000); 
+        } showSlides();
+
+        function loadProducts() { 
+            fetch('http://127.0.0.1:3000/api/products')
+                .then(res => res.json())
+                .then(p => { 
+                    allProducts = p; 
+                    displayProducts(p); 
+                    displayAdminProducts(); 
+                })
+                .catch(err => {
+                    document.getElementById('product-grid').innerHTML = '<div style="color:red; font-weight:bold; font-size:16px; padding: 30px; border: 1px solid red; border-radius: 4px;">Backend server is offline. Please run "node server.js" in terminal.</div>';
+                });
+        }
+        
+        function displayProducts(productsToShow) {
+            let grid = document.getElementById('product-grid'); grid.innerHTML = ''; 
+            productsToShow.forEach(product => {
+                let heartColor = wishlist.includes(product.id) ? "❤️" : "🤍";
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="heart-icon" onclick="toggleWishlist(${product.id}, this)">${heartColor}</div>
+                        <img src="${product.image}" class="product-image" onclick="viewProduct(${product.id})">
+                        <h3 class="product-title" onclick="viewProduct(${product.id})">${product.name}</h3>
+                        <div class="product-rating">${product.rating || "⭐⭐⭐⭐ (4.0)"}</div>
+                        <p class="product-price">₹${product.price}</p>
+                        <button class="btn-cart" onclick="addToCart(${product.id}, event)">Add to Bag</button>
+                    </div>`;
+            });
+        }
+
+        function addNewProduct() {
+            let name = document.getElementById('addName').value; 
+            let price = document.getElementById('addPrice').value; 
+            let image = document.getElementById('addImage').value;
+            if(!name || !price || !image) return alert("Please fill all details!");
+            
+            fetch('http://127.0.0.1:3000/api/products', { 
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' }, 
+                body: JSON.stringify({ name: name, price: parseInt(price), image: image }) 
+            })
+            .then(res => res.json())
+            .then(data => { 
+                alert("Product Added successfully!"); 
+                document.getElementById('addName').value = ''; 
+                document.getElementById('addPrice').value = ''; 
+                document.getElementById('addImage').value = ''; 
+                loadProducts(); 
+            });
+        }
+
+        function displayAdminProducts() {
+            let list = document.getElementById('admin-product-list'); list.innerHTML = '';
+            allProducts.forEach(product => {
+                list.innerHTML += `
+                <div class="admin-item">
+                    <span><b>${product.name}</b> (₹${product.price})</span>
+                    <button class="btn-delete" onclick="deleteProduct(${product.id})">Remove</button>
+                </div>`;
+            });
+        }
+        
+        function deleteProduct(productId) {
+            if(confirm("Remove this product from the store?")) { 
+                fetch('http://127.0.0.1:3000/api/products/' + productId, { method: 'DELETE' })
+                .then(res => res.json())
+                .then(data => { loadProducts(); }); 
+            }
+        }
+
+        function filterCategory(category, btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); btnElement.classList.add('active');
+            displayProducts(category === 'All' ? allProducts : allProducts.filter(p => p.category === category));
+        }
+
+        function toggleWishlist(id, element) {
+            if (wishlist.includes(id)) { wishlist = wishlist.filter(wId => wId !== id); element.innerText = "🤍"; } 
+            else { wishlist.push(id); element.innerText = "❤️"; }
+            document.getElementById('wish-count').innerText = wishlist.length;
+        }
+
+        function viewProduct(id) {
+            let product = allProducts.find(p => p.id === id);
+            document.getElementById('view-image').src = product.image;
+            document.getElementById('view-title').innerText = product.name;
+            document.getElementById('view-rating').innerText = product.rating || "⭐⭐⭐⭐ (4.0)";
+            document.getElementById('view-price').innerText = "₹" + product.price;
+            document.getElementById('view-cart-btn').onclick = function(e) { addToCart(id, e); };
+            document.getElementById('productViewModal').style.display = 'flex';
+        }
+
+        function addToCart(id, event) {
+            cart.push(allProducts.find(p => p.id === id)); updateCartMath();
+            if(event) { let btn = event.target; let old = btn.innerText; btn.innerText = "Added"; btn.style.background = "#28a745"; btn.style.color = "white"; setTimeout(() => { btn.innerText = old; btn.style.background = "#111"; btn.style.color = "white"; }, 1000); }
+        }
+
+        function updateCartMath() {
+            document.getElementById('cart-count').innerText = cart.length;
+            total = cart.reduce((sum, item) => sum + item.price, 0);
+            if (discountApplied) total = total * 0.5;
+        }
+
+        function openCart() {
+            let container = document.getElementById('cart-items-container'); container.innerHTML = ''; 
+            if(cart.length === 0) container.innerHTML = '<p style="text-align:center; padding:20px; color: #777;">Your bag is empty.</p>'; 
+            else cart.forEach(item => { container.innerHTML += `<div class="cart-item"><span>${item.name}</span><span style="font-weight:700;">₹${item.price}</span></div>`; });
+            document.getElementById('total-price').innerText = "Total: ₹" + total;
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function applyPromo() {
+            let code = document.getElementById('promoCode').value.toUpperCase();
+            if (cart.length === 0) return alert("Your bag is empty.");
+            if (code === "NEW50" && !discountApplied) { discountApplied = true; updateCartMath(); document.getElementById('discount-msg').style.display = 'inline-block'; document.getElementById('total-price').innerText = "Total: ₹" + total; alert("Promo code applied!"); } 
+            else if (discountApplied) alert("Promo code is already applied."); else alert("Invalid code.");
+        }
+
+        function openLogin() { document.getElementById('loginModal').style.display = 'flex'; }
+        
+        function sendOTP() {
+            let mob = document.getElementById('mobileNo').value;
+            if(mob.length !== 10) return alert("Enter a valid 10-digit number.");
+            currentUser.mobile = mob;
+            currentGeneratedOTP = Math.floor(1000 + Math.random() * 9000).toString();
+            alert(`SMS Simulator:\n\nYour FashionHub verification code is: ${currentGeneratedOTP}`);
+            document.getElementById('otp-hint-msg').innerText = `OTP sent! (Hint: ${currentGeneratedOTP})`;
+            document.getElementById('step-mobile').style.display = 'none';
+            document.getElementById('step-otp').style.display = 'block';
+        }
+
+        function verifyOTP() {
+            let otp = document.getElementById('otpBox').value;
+            if(otp === currentGeneratedOTP) {
+                currentUser.loggedIn = true;
+                document.getElementById('loginBtn').innerHTML = "👤 Profile";
+                alert("Login Successful.");
+                closeModal('loginModal');
+            } else { alert("Incorrect OTP."); }
+        }
+
+        function proceedToAddress() {
+            if (cart.length === 0) return alert("Your bag is empty.");
+            if (!currentUser.loggedIn) { alert("Please login to continue."); openLogin(); return; }
+            closeModal('cartModal');
+            document.getElementById('addressModal').style.display = 'flex';
+        }
+
+        function proceedToPayment() {
+            let name = document.getElementById('fullName').value;
+            let addr = document.getElementById('fullAddress').value;
+            let pin = document.getElementById('pinCode').value;
+            if(!name || !addr || !pin) return alert("Please fill complete address.");
+            currentUser.name = name;
+            currentUser.address = `${addr}, Pincode: ${pin}`;
+            closeModal('addressModal');
+            document.getElementById('final-amount').innerText = "₹" + total;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function togglePaymentFields() {
+            let method = document.querySelector('input[name="pay"]:checked').value;
+            document.getElementById('upi-field').style.display = method === 'UPI' ? 'block' : 'none';
+            document.getElementById('card-field').style.display = method === 'Card' ? 'block' : 'none';
+        }
+
+        function confirmFinalOrder() {
+            let method = document.querySelector('input[name="pay"]:checked').value;
+            let paymentId = "Cash on Delivery";
+
+            if(method === 'UPI') {
+                paymentId = document.getElementById('upiId').value;
+                if(!paymentId.includes('@')) return alert("Enter a valid UPI ID.");
+            } else if(method === 'Card') {
+                paymentId = document.getElementById('cardNo').value;
+                if(paymentId.length < 16) return alert("Enter a valid 16-digit card number.");
+            }
+
+            let orderData = {
+                items: cart.map(i => i.name),
+                totalAmount: total,
+                paymentMethod: method,
+                paymentId: paymentId,
+                customer: currentUser
+            };
+
+            fetch('http://127.0.0.1:3000/api/orders', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData)
+            }).then(res => res.json()).then(data => {
+                alert(`Order Confirmed!\n\nDelivering to: ${currentUser.name}\nAmount: ₹${total}\n\nThank you for shopping.`);
+                cart = []; total = 0; discountApplied = false; document.getElementById('discount-msg').style.display = 'none'; updateCartMath(); closeModal('paymentModal'); 
+            });
+        }
+
+        function openAdmin() { document.getElementById('adminModal').style.display = 'flex'; fetchOrders(); }
+        
+        function fetchOrders() {
+            fetch('http://127.0.0.1:3000/api/orders').then(res => res.json()).then(orders => {
+                let container = document.getElementById('admin-orders-list'); container.innerHTML = '';
+                if(orders.length === 0) { container.innerHTML = '<p style="color:#666; text-align:center; padding: 20px;">No orders received yet.</p>'; return; }
+                orders.reverse().forEach(o => {
+                    container.innerHTML += `
+                        <div style="padding: 15px; margin-bottom: 15px; background: #fff; border: 1px solid #ddd; border-left: 4px solid #111; border-radius: 4px;">
+                            <p style="font-size: 15px; margin-bottom: 5px;"><b>Order #${o.id}</b> | Total: <span style="font-weight:bold;">₹${o.totalAmount}</span> <span style="float:right; font-size: 12px; color: #888;">${o.date}</span></p>
+                            <p style="margin-top:5px; font-size: 14px;"><b>Customer:</b> ${o.customer.name} (${o.customer.mobile})</p>
+                            <p style="margin-top:2px; font-size: 14px;"><b>Address:</b> ${o.customer.address}</p>
+                            <p style="margin-top:2px; font-size: 14px;"><b>Payment:</b> ${o.paymentMethod} (${o.paymentId})</p>
+                            <hr style="margin: 10px 0; border: none; border-top: 1px solid #eee;">
+                            <p style="font-size: 14px; color: #555;"><b>Items:</b> ${o.items.join(', ')}</p>
+                        </div>`;
+                });
+            });
+        }
+
+        function searchProducts() { let text = document.getElementById('searchInput').value.toLowerCase(); displayProducts(allProducts.filter(p => p.name.toLowerCase().includes(text))); }
+        window.onload = loadProducts;
+    </script>
+</body>
+</html>
