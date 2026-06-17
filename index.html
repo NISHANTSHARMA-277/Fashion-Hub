@@ -106,21 +106,34 @@
         .btn-delete:hover { background: #dc3545; color: white; }
 
         
-    @media (max-width: 768px) {
+   @media (max-width: 768px) {
+        /* Menu ko theek rakhne ke liye */
         header, .navbar, nav {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
+        
+        /* Kapdon ko ek line me laane ke liye (Row & Wrap) */
         .products-container, .product-grid, .products {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row; 
+            flex-wrap: wrap; 
+            justify-content: space-between; 
             width: 100%;
+            padding: 5px;
         }
+        
+        /* 100% ki jagah 48% kar diya taaki ek line me 2 aa sakein */
         .product-card, .product {
-            width: 90%;
-            margin-bottom: 20px;
+            width: 48%; 
+            margin-bottom: 15px;
+        }
+        
+        /* Image bahar na nikle */
+        .product-card img, .product img {
+            width: 100%;
+            height: auto;
         }
     }
     </style>
