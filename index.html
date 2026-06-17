@@ -105,35 +105,62 @@
         .btn-delete { background: white; color: #dc3545; border: 1px solid #dc3545; padding: 6px 12px; cursor: pointer; font-weight: 600; border-radius: 4px; transition: 0.2s;}
         .btn-delete:hover { background: #dc3545; color: white; }
 
+  @media (max-width: 768px) {
         
-   @media (max-width: 768px) {
-        /* Menu ko theek rakhne ke liye */
+        /* 1. PREMIUM HEADER / NAVBAR */
+        /* Logo aur Cart amne-samne rahenge */
         header, .navbar, nav {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 10px !important;
         }
-        
-        /* Kapdon ko ek line me laane ke liye (Row & Wrap) */
+
+        /* Search bar poori width lega aur neeche aayega */
+        .navbar input, .search-box, .search-bar {
+            width: 100% !important;
+            margin-top: 12px !important;
+            order: 3 !important; /* Isko sabse neeche push karne ke liye */
+            border-radius: 6px !important;
+        }
+
+        /* 2. FLIPKART STYLE 2-GRID PRODUCTS */
+        /* Yeh code guarantee deta hai ki 1 line me sirf 2 kapde aayenge */
         .products-container, .product-grid, .products {
-            display: flex;
-            flex-direction: row; 
-            flex-wrap: wrap; 
-            justify-content: space-between; 
-            width: 100%;
-            padding: 5px;
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important; /* 2 barabar hisse */
+            gap: 12px !important; /* Kapdon ke beech ki jagah */
+            padding: 10px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
         }
-        
-        /* 100% ki jagah 48% kar diya taaki ek line me 2 aa sakein */
+
+        /* Har kapde ka dabba (Card) */
         .product-card, .product {
-            width: 48%; 
-            margin-bottom: 15px;
+            width: 100% !important; /* Grid apne aap size control karega */
+            margin: 0 !important;
+            padding: 8px !important;
+            border-radius: 8px !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important; /* Halki si shadow app jaisi */
+            box-sizing: border-box !important;
+        }
+
+        /* Kapdon ki photo aur text */
+        .product-card img, .product img {
+            width: 100% !important;
+            height: auto !important;
+            border-radius: 5px !important;
+        }
+
+        .product-card h3, .product-title {
+            font-size: 14px !important; /* Mobile ke liye chhota text */
+            margin-top: 8px !important;
         }
         
-        /* Image bahar na nikle */
-        .product-card img, .product img {
-            width: 100%;
-            height: auto;
+        .product-card p, .product-price {
+            font-size: 13px !important;
+            font-weight: bold !important;
         }
     }
     </style>
