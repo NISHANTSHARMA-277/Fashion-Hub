@@ -106,15 +106,21 @@
         .btn-delete:hover { background: #dc3545; color: white; }
 
   @media (max-width: 768px) {
-        
-        /* 1. PREMIUM HEADER / NAVBAR */
-        /* Logo aur Cart amne-samne rahenge */
+     
+      /* 1. PREMIUM HEADER / NAVBAR */
         header, .navbar, nav {
             display: flex !important;
             flex-wrap: wrap !important;
             justify-content: space-between !important;
             align-items: center !important;
-            padding: 10px !important;
+            padding: 12px 15px !important;
+            
+            /* Naye Premium Features */
+            position: sticky !important; /* Scroll karne par upar chipka rahega */
+            top: 0 !important;
+            z-index: 1000 !important; /* Hamesha sabse aage dikhega */
+            background-color: #111 !important; /* Dark background taaki transparent na lage */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important; /* Neeche ek cool shadow */
         }
 
         /* Search bar poori width lega aur neeche aayega */
