@@ -107,84 +107,68 @@
 
 @media (max-width: 768px) {
         
-        /* 1. TOP HEADER (Logo aur Icons) */
+        /* 1. HEADER (Logo aur Icons ko ek hi line me force karna) */
         nav {
             display: flex !important;
             flex-wrap: wrap !important;
             justify-content: space-between !important;
             align-items: center !important;
-            padding: 12px 15px !important;
+            padding: 10px 15px !important;
         }
+        
         .logo-container {
             order: 1 !important;
+            width: auto !important;
             margin: 0 !important;
         }
+
         .nav-links {
             order: 2 !important;
+            width: auto !important;
             display: flex !important;
+            flex-wrap: nowrap !important; /* Inko neeche girne se rokega */
+            gap: 10px !important;
             align-items: center !important;
-            justify-content: flex-end !important; 
-            gap: 15px !important; 
         }
 
-        /* 2. SEARCH BAR */
+        /* 2. SEARCH BAR (Ekdum neeche) */
         .search-box {
             order: 3 !important;
             width: 100% !important;
-            margin-top: 15px !important;
-        }
-        .search-box input {
-            width: 100% !important;
-            box-sizing: border-box !important;
+            margin-top: 10px !important;
         }
 
-        /* 3. CATEGORY BUTTONS */
+        /* 3. CATEGORIES (Ek line me lock, aur scrollable) */
         .filter-bar {
             display: flex !important;
-            justify-content: flex-start !important; 
+            flex-wrap: nowrap !important; /* Button ko doosri line me nahi aane dega */
             overflow-x: auto !important;
-            white-space: nowrap !important;
             padding: 10px 15px !important;
-            gap: 12px !important;
+            gap: 10px !important;
+        }
+        .filter-btn {
+            white-space: nowrap !important; /* Text ko tutne se rokega */
+            flex-shrink: 0 !important; /* Button ko chhota hone se rokega */
         }
         .filter-bar::-webkit-scrollbar {
             display: none !important;
         }
 
-        /* 4. SLIDER / BANNER (Aapke hisaab se aur chhota kar diya) */
-        .hero, .banner, .slider {
-            height: 160px !important; /* Pehle 250 tha, ab 160 kar diya */
-            min-height: 160px !important;
+        /* 4. SLIDER (Height choti aur fixed) */
+        .hero {
+            height: 200px !important; 
+            min-height: 200px !important;
             padding: 15px !important;
-        }
-        /* Slider ki image proper fit ho aur kate na */
-        .hero img, .banner img, .slider img {
-            height: 160px !important;
-            width: 100% !important;
-            object-fit: cover !important;
-            border-radius: 8px !important;
+            background-size: cover !important;
+            background-position: center !important;
         }
 
-        /* 5. 2-GRID PRODUCTS (Kapdon ki height badha di) */
+        /* 5. 2-GRID PRODUCTS */
         .product-grid, #product-list {
             display: grid !important;
             grid-template-columns: repeat(2, 1fr) !important;
-            gap: 15px !important; /* Beech ki jagah badha di */
+            gap: 10px !important;
             padding: 10px !important;
-        }
-        .product-card {
-            width: 100% !important;
-            margin: 0 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: space-between !important;
-        }
-        /* Kapdon ki photo ab lambi aur saaf dikhegi */
-        .product-card img {
-            height: 220px !important; /* Photo ko lamba kar diya */
-            width: 100% !important;
-            object-fit: cover !important; /* Photo stretch hokar kharab nahi hogi */
-            border-radius: 6px !important;
         }
     }
     </style>
