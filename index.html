@@ -105,68 +105,64 @@
         .btn-delete { background: white; color: #dc3545; border: 1px solid #dc3545; padding: 6px 12px; cursor: pointer; font-weight: 600; border-radius: 4px; transition: 0.2s;}
         .btn-delete:hover { background: #dc3545; color: white; }
 
-  @media (max-width: 768px) {
-     
-      /* 1. PREMIUM HEADER / NAVBAR */
+ @media (max-width: 768px) {
+        
+        /* 1. TOP HEADER (Logo aur Icons ek line me) */
         header, .navbar, nav {
             display: flex !important;
-            flex-wrap: wrap !important;
             justify-content: space-between !important;
             align-items: center !important;
-            padding: 12px 15px !important;
-            
-            /* Naye Premium Features */
-            position: sticky !important; /* Scroll karne par upar chipka rahega */
-            top: 0 !important;
-            z-index: 1000 !important; /* Hamesha sabse aage dikhega */
-            background-color: #111 !important; /* Dark background taaki transparent na lage */
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5) !important; /* Neeche ek cool shadow */
+            padding: 10px 15px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
         }
 
-        /* Search bar poori width lega aur neeche aayega */
+        /* 2. SEARCH BAR (Neeche aayega aur poori jagah lega) */
         .navbar input, .search-box, .search-bar {
             width: 100% !important;
-            margin-top: 12px !important;
-            order: 3 !important; /* Isko sabse neeche push karne ke liye */
-            border-radius: 6px !important;
+            margin-top: 10px !important;
+            order: 3 !important;
         }
 
-        /* 2. FLIPKART STYLE 2-GRID PRODUCTS */
-        /* Yeh code guarantee deta hai ki 1 line me sirf 2 kapde aayenge */
+        /* 3. CATEGORY BUTTONS (All, Men, Women - Side Scroll honge) */
+        .categories, .category-menu, .nav-links {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important; 
+            white-space: nowrap !important;
+            padding: 10px 5px !important;
+            gap: 15px !important;
+        }
+        /* Scrollbar ko gayab karne ke liye */
+        .categories::-webkit-scrollbar, .nav-links::-webkit-scrollbar {
+            display: none !important;
+        }
+
+        /* 4. CHHOTA SLIDER (Mobile pe fit rahega) */
+        .slider img, .banner img, .carousel img {
+            height: 180px !important; 
+            width: 100% !important;
+            object-fit: cover !important; 
+            border-radius: 8px !important;
+        }
+
+        /* 5. FLIPKART STYLE 2-GRID KAPDE (Jo pehle se mast the) */
         .products-container, .product-grid, .products {
             display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important; /* 2 barabar hisse */
-            gap: 12px !important; /* Kapdon ke beech ki jagah */
+            grid-template-columns: repeat(2, 1fr) !important; 
+            gap: 12px !important; 
             padding: 10px !important;
             width: 100% !important;
             box-sizing: border-box !important;
         }
-
-        /* Har kapde ka dabba (Card) */
         .product-card, .product {
-            width: 100% !important; /* Grid apne aap size control karega */
+            width: 100% !important;
             margin: 0 !important;
             padding: 8px !important;
-            border-radius: 8px !important;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important; /* Halki si shadow app jaisi */
-            box-sizing: border-box !important;
         }
-
-        /* Kapdon ki photo aur text */
         .product-card img, .product img {
             width: 100% !important;
             height: auto !important;
-            border-radius: 5px !important;
-        }
-
-        .product-card h3, .product-title {
-            font-size: 14px !important; /* Mobile ke liye chhota text */
-            margin-top: 8px !important;
-        }
-        
-        .product-card p, .product-price {
-            font-size: 13px !important;
-            font-weight: bold !important;
         }
     }
     </style>
