@@ -107,63 +107,60 @@
 
 @media (max-width: 768px) {
         
-        /* 1. HEADER (Logo aur Icons ko ek hi line me force karna) */
+        /* 1. NAV BAR SETTING */
         nav {
             display: flex !important;
             flex-wrap: wrap !important;
             justify-content: space-between !important;
-            align-items: center !important;
-            padding: 10px 15px !important;
+            padding: 10px !important;
         }
-        
+
+        /* Logo ko left me lock kiya */
         .logo-container {
             order: 1 !important;
-            width: auto !important;
+            width: 35% !important;
             margin: 0 !important;
         }
 
+        /* Login aur Icons ko right me fit kiya */
         .nav-links {
             order: 2 !important;
-            width: auto !important;
+            width: 65% !important;
             display: flex !important;
-            flex-wrap: nowrap !important; /* Inko neeche girne se rokega */
-            gap: 10px !important;
+            justify-content: flex-end !important;
             align-items: center !important;
+            gap: 8px !important;
+            font-size: 14px !important; /* Text thoda chhota taaki fit ho jaye */
         }
 
-        /* 2. SEARCH BAR (Ekdum neeche) */
+        /* 2. SEARCH BAR (Neeche jayega) */
         .search-box {
             order: 3 !important;
             width: 100% !important;
-            margin-top: 10px !important;
+            margin-top: 15px !important;
         }
 
-        /* 3. CATEGORIES (Ek line me lock, aur scrollable) */
+        /* 3. CATEGORIES (All, Men, Women - Left me) */
         .filter-bar {
             display: flex !important;
-            flex-wrap: nowrap !important; /* Button ko doosri line me nahi aane dega */
+            justify-content: flex-start !important;
             overflow-x: auto !important;
-            padding: 10px 15px !important;
+            white-space: nowrap !important;
+            padding: 10px !important;
             gap: 10px !important;
-        }
-        .filter-btn {
-            white-space: nowrap !important; /* Text ko tutne se rokega */
-            flex-shrink: 0 !important; /* Button ko chhota hone se rokega */
         }
         .filter-bar::-webkit-scrollbar {
             display: none !important;
         }
 
-        /* 4. SLIDER (Height choti aur fixed) */
+        /* 4. CHHOTA SLIDER */
         .hero {
-            height: 200px !important; 
-            min-height: 200px !important;
-            padding: 15px !important;
-            background-size: cover !important;
+            height: 180px !important;
+            min-height: 180px !important;
             background-position: center !important;
         }
 
-        /* 5. 2-GRID PRODUCTS */
+        /* 5. 2-GRID KAPDE */
         .product-grid, #product-list {
             display: grid !important;
             grid-template-columns: repeat(2, 1fr) !important;
