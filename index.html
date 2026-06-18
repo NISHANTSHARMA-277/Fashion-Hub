@@ -105,64 +105,60 @@
         .btn-delete { background: white; color: #dc3545; border: 1px solid #dc3545; padding: 6px 12px; cursor: pointer; font-weight: 600; border-radius: 4px; transition: 0.2s;}
         .btn-delete:hover { background: #dc3545; color: white; }
 
- @media (max-width: 768px) {
-        
-        /* 1. TOP HEADER (Logo aur Icons ek line me) */
-        header, .navbar, nav {
+@media (max-width: 768px) {
+        /* 1. Navbar - Sticky & Clean */
+        nav {
             display: flex !important;
+            flex-wrap: wrap !important;
             justify-content: space-between !important;
             align-items: center !important;
-            padding: 10px 15px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
+            padding: 10px !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
         }
 
-        /* 2. SEARCH BAR (Neeche aayega aur poori jagah lega) */
-        .navbar input, .search-box, .search-bar {
-            width: 100% !important;
-            margin-top: 10px !important;
-            order: 3 !important;
+        /* 2. Icons ek line me (Nav-links) */
+        .nav-links {
+            display: flex !important;
+            gap: 15px !important;
+            align-items: center !important;
         }
 
-        /* 3. CATEGORY BUTTONS (All, Men, Women - Side Scroll honge) */
-        .categories, .category-menu, .nav-links {
+        /* 3. Search Bar - Poori width aur neeche */
+        .search-box {
+            width: 100% !important;
+            margin-top: 12px !important;
+            order: 3 !important; /* Isko aakhri me push karega */
+        }
+        .search-box input {
+            width: 100% !important;
+        }
+
+        /* 4. Categories - Side Scroll (All, Men, Women) */
+        .filter-bar {
             display: flex !important;
             flex-wrap: nowrap !important;
-            overflow-x: auto !important; 
+            overflow-x: auto !important;
             white-space: nowrap !important;
-            padding: 10px 5px !important;
-            gap: 15px !important;
-        }
-        /* Scrollbar ko gayab karne ke liye */
-        .categories::-webkit-scrollbar, .nav-links::-webkit-scrollbar {
-            display: none !important;
-        }
-
-        /* 4. CHHOTA SLIDER (Mobile pe fit rahega) */
-        .slider img, .banner img, .carousel img {
-            height: 180px !important; 
-            width: 100% !important;
-            object-fit: cover !important; 
-            border-radius: 8px !important;
-        }
-
-        /* 5. FLIPKART STYLE 2-GRID KAPDE (Jo pehle se mast the) */
-        .products-container, .product-grid, .products {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important; 
-            gap: 12px !important; 
             padding: 10px !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
+            gap: 10px !important;
+            justify-content: flex-start !important;
         }
-        .product-card, .product {
+        .filter-bar::-webkit-scrollbar {
+            display: none !important; /* Scrollbar hide karne ke liye */
+        }
+
+        /* 5. Flipkart jaisa 2-Grid System */
+        .product-grid, #product-list {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 10px !important;
+            padding: 10px !important;
+        }
+        .product-card {
             width: 100% !important;
             margin: 0 !important;
-            padding: 8px !important;
-        }
-        .product-card img, .product img {
-            width: 100% !important;
-            height: auto !important;
         }
     }
     </style>
